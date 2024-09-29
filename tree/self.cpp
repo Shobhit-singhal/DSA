@@ -73,6 +73,6 @@ int main(){
     node* root=buildTree(NULL);
     cout<<"BFS: "<<endl;
     bfs(root);
-    cout<<endl<<"DFS"<<endl;
+    cout<<endl<<"reverse order traversal"<<endl;
     reverseTravel(root);
 }
