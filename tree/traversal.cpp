@@ -69,10 +69,48 @@ void reverseTravel(node* root){
             cout<<endl;
     }
 }
+void dfs(node* root){
+    stack<node*> s;
+    s.push(root);
+    while(!s.empty()){
+        node* temp=s.top();
+        s.pop();
+        cout<<temp->data<<" ";
+        if(temp->right) s.push(temp->right);
+        if(temp->left) s.push(temp->left);
+    }
+}
+void inOrder(node* root){
+    if(root==NULL)  return;
+    inOrder(root->left);
+    cout<<root->data<<" ";
+    inOrder(root->right);
+}
+void preOrder(node* root){
+    if(root==NULL)  return;
+    cout<<root->data<<" ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
+void postOrder(node* root){
+    if(root==NULL)  return;
+    postOrder(root->left);
+    postOrder(root->right);
+    cout<<root->data<<" ";
+}
 int main(){
     node* root=buildTree(NULL);
     cout<<"BFS: "<<endl;
     bfs(root);
     cout<<endl<<"reverse order traversal"<<endl;
     reverseTravel(root);
+    cout<<endl<<"DFS"<<endl;
+    dfs(root);
+    cout<<endl<<"In-order traversal"<<endl;
+    inOrder(root);
+    cout<<endl<<"pre-order traversal"<<endl;
+    preOrder(root);
+    cout<<endl<<"post-order traversal"<<endl;
+    postOrder(root);
+
 }
