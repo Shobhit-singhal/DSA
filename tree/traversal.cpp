@@ -112,5 +112,4 @@ int main(){
     preOrder(root);
     cout<<endl<<"post-order traversal"<<endl;
     postOrder(root);
-
 }

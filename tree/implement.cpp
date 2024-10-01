@@ -49,9 +49,50 @@ void bfs(node* root){
         }
     }
 }
+
+
+void buildTreeFromTraversal(node* &root){
+    queue<node*> q;
+    int val;
+    cout<<"Enter data: ";
+    cin>>val;
+    root=new node(val);
+    q.push(root);
+    while(!q.empty()){
+        node* temp=q.front();
+        q.pop();
+        int leftData;
+        cout<<"Enter data for left of "<<temp->data<<" :";
+        cin>>leftData;
+        if(leftData!=-1){
+            temp->left=new node(leftData);
+            q.push(temp->left);
+        }
+        int rightData;
+        cout<<"Enter data for right of "<<temp->data<<" :";
+        cin>>rightData;
+        if(rightData!=-1){
+            temp->right=new node(rightData);
+            q.push(temp->right);
+        }
+        cout<<endl;
+    }
+}
+int getHeight(node* root){
+    if(root==NULL)  
+        return 0;
+    int left=getHeight(root->left);
+    int right=getHeight(root->right);
+    int ans=max(left,right)+1;
+    return ans;
+}
 int main(){
     node* root=NULL;
-    root=buildTree(root);
+    // root=buildTree(root);
+    buildTreeFromTraversal(root);
     bfs(root);
+    cout<<"Height of tree is: "<<getHeight(root);
 }
 //1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
+
+//1 3 5 7 11 17 -1 -1 -1 -1 -1 -1 -1
