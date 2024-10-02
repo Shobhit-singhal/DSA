@@ -30,7 +30,7 @@ int kSumPath(node* root,int k){
     return count;
 }
 int main(){
-    // Creating a binary tree
+        // Creating a binary tree
     node* root = new node(1);
     root->left = new node(3);
     root->right = new node(-1);
