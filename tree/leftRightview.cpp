@@ -9,7 +9,8 @@ class node{
             left=right=NULL;
         }
 };
-vector<int> getTopView(node* root){
+
+vector<int> getLeftView(node* root){
     vector<int> ans;
     queue<pair<int, node*>> q;
     map<int,node*> nodes;
@@ -20,10 +21,10 @@ vector<int> getTopView(node* root){
         pair<int, node*> temp=q.front();
         q.pop();
         node* curr= temp.second;
-        int dist=temp.first;
-        if(nodes.find(dist)==nodes.end())    nodes[dist]=curr;
-        if(curr->left) q.push(make_pair(dist-1, curr->left));
-        if(curr->right) q.push(make_pair(dist+1, curr->right));
+        int lvl=temp.first;
+        if(nodes.find(lvl)==nodes.end())    nodes[lvl]=curr;
+        if(curr->left) q.push(make_pair(lvl+1, curr->left));
+        if(curr->right) q.push(make_pair(lvl+1, curr->right));
     }
     for(auto i: nodes){
         ans.push_back(i.second->data);
@@ -31,7 +32,8 @@ vector<int> getTopView(node* root){
     return ans;
     
 }
-vector<int> getBtmView(node* root){
+
+vector<int> getRightView(node* root){
     vector<int> ans;
     queue<pair<int, node*>> q;
     map<int,node*> nodes;
@@ -42,10 +44,10 @@ vector<int> getBtmView(node* root){
         pair<int, node*> temp=q.front();
         q.pop();
         node* curr= temp.second;
-        int dist=temp.first;
-        nodes[dist]=curr;
-        if(curr->left) q.push(make_pair(dist-1, curr->left));
-        if(curr->right) q.push(make_pair(dist+1, curr->right));
+        int lvl=temp.first;
+        nodes[lvl]=curr;
+        if(curr->left) q.push(make_pair(lvl+1, curr->left));
+        if(curr->right) q.push(make_pair(lvl+1, curr->right));
     }
     for(auto i: nodes){
         ans.push_back(i.second->data);
@@ -53,8 +55,9 @@ vector<int> getBtmView(node* root){
     return ans;
     
 }
-int main(){
-        node* root = new node(1);
+int main() {
+    // Example usage
+    node* root = new node(1);
     root->left = new node(2);
     root->right = new node(3);
     root->left->left = new node(4);
@@ -62,19 +65,19 @@ int main(){
     root->right->left = new node(6);
     root->right->right = new node(7);
 
-    vector<int> topView = getTopView(root);
-    
-    
-    cout<<"Top view: ";
-    for (int i : topView) {
+    vector<int> leftView = getLeftView(root);
+    vector<int> rightView = getRightView(root);
+
+    // Print left view
+    cout << "Left View: ";
+    for (int i : leftView) {
         cout << i << " ";
     }
     cout << endl;
-    vector<int> btmView = getBtmView(root);
-    
-    
-    cout<<"bottom view: ";
-    for (int i : btmView) {
+
+    // Print right view
+    cout << "Right View: ";
+    for (int i : rightView) {
         cout << i << " ";
     }
     cout << endl;
