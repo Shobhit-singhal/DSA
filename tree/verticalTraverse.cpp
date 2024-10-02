@@ -17,32 +17,35 @@ void insert(vector<int>& dists,int dist){
     }
     dists.push_back(dist);
 }
-vector<vector<int>> vertical(node* root){
-    vector<vector<int>> ans;
-    vector<int> dists;
-    queue<pair<node*, int>> q;
-    map<int, vector<int>> nodes;
-    q.push(make_pair(root,0));
-    while(!q.empty()){
-        pair<node*, int> temp=q.front();
-        q.pop();
-        node* curr=temp.first;
-        int dist=temp.second;
-        insert(dists,dist);
-        nodes[dist].push_back(curr->data);
-        if(curr->left)  q.push(make_pair(curr->left,dist-1));
-        if(curr->right)  q.push(make_pair(curr->right,dist+1));
+vector<vector<int>> verticalTraversal(node* root) {
+        vector<vector<int>> ans;
+        map<int, map<int,vector<int>> >nodes;
+        if(root==NULL)  return ans; 
+        queue<pair<node*, pair<int , int> > > q;
+        q.push(make_pair(root,make_pair(0,0)));
+        while(!q.empty()){
+            pair<node*, pair<int , int> > temp;
+            temp=q.front();
+            q.pop();
+            node* curr= temp.first;
+            int lvl=temp.second.first;
+            int dist=temp.second.second;
+            nodes[dist][lvl].push_back(curr->data);
+            if(curr->left)  q.push(make_pair(curr->left, make_pair(lvl+1,dist-1)));
+            if(curr->right)  q.push(make_pair(curr->right, make_pair(lvl+1,dist+1)));
+        }
+        for(auto& p : nodes) {
+            vector<int> col;
+            for(auto& q : p.second) {
+                // Sort nodes at the same level by their values
+                sort(q.second.begin(), q.second.end());
+                // Add sorted nodes to the current column
+                col.insert(col.end(), q.second.begin(), q.second.end());
+            }
+            ans.push_back(col);
+        }
+        return ans;
     }
-    sort(dists.begin(),dists.end());
-    for(int dist: dists){
-        ans.push_back(nodes[dist]);
-    }
-    // for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-    //     ans.push_back(it->second); // Add values corresponding to each distance
-    // }
-
-    return ans;
-}
 int main(){
     node* root=new node(1);
     root->left=new node(2);
@@ -53,7 +56,7 @@ int main(){
     root->right->right=new node(7);
 
     
-    vector<vector<int>> ans=vertical(root);
+    vector<vector<int>> ans=verticalTraversal(root);
     for(int i=0;i<ans.size();i++){  
         for(int j=0;j<ans[i].size();j++){
             cout<<ans[i][j]<<" ";
