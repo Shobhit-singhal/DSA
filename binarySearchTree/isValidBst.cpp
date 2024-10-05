@@ -10,16 +10,6 @@ class node{
         }
 };
 
-
-bool isValid(node* root, int min=INT_MIN, int max=INT_MAX){
-    if(root==NULL)  return true;
-    if(root->data >= min && root->data <= max){
-        bool left=isValid(root->left,min,root->data);
-        bool right=isValid(root->right,root->data,max);
-        return left && right;
-    }
-    return false;
-}
 node* buildTree(){
     int data;
     cin>>data;
@@ -35,6 +25,18 @@ void inorder(node* root){
     cout<<root->data<<" ";
     inorder(root->right);
 }
+
+
+bool isValid(node* root, int min=INT_MIN, int max=INT_MAX){
+    if(root==NULL)  return true;
+    if(root->data >= min && root->data <= max){
+        bool left=isValid(root->left,min,root->data);
+        bool right=isValid(root->right,root->data,max);
+        return left && right;
+    }
+    return false;
+}
+
 int main(){
     node* root=buildTree();
     
