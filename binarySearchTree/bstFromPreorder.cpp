@@ -31,6 +31,7 @@ int main(){
     vector<int> preorder={20, 10, 5, 15, 13, 35, 30, 42};
     node* root=createdBST(preorder);
     inorder(root);
-    
+
     
 }
+//5 10 13 15 20 30 35 42 
