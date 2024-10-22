@@ -28,7 +28,7 @@ void flattenTree(node* root){
             curr->left=NULL;
         }
         curr=curr->right;
-    }
+    } 
 }
 node* buildTree(){
     int data;
