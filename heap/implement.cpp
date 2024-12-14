@@ -1,120 +1,66 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 class heap{
     public:
+
         int arr[100];
         int size;
         heap(){
-            arr[0]=-1;
             size=0;
         }
-
-        void insert(int val){
+        void insert(int el){
             int idx=++size;
-            arr[idx]=val;
+            arr[idx]=el;
+
             while(idx>1){
                 int parent=idx/2;
-                if(arr[parent]< arr[idx]){
+                if(arr[parent]<arr[idx]){
                     swap(arr[parent],arr[idx]);
                     idx=parent;
-                }else{
+                }else
                     return;
-                }
             }
         }
-        int del(){
+        int remove(){
             if(size==0){
-                cout<< "nothing to delete"<<endl;
-                return -1;
+                cout<<"Heap is empty"<<endl;
+                return;
             }
-            int ret=arr[1];
-            arr[1]=arr[size--];
-            int idx=1;
-            while(idx<=size){
-                int left=idx*2;
-                int right=idx*2+1;
-                int larger=idx;
-                if(left<=size && arr[left]>arr[larger])
-                    larger=left;
-                if(right<=size && arr[right]>arr[larger])
-                    larger=right;
-
-                if(larger!=idx){
-                    swap(arr[idx],arr[larger]);
-                    idx=larger;
+            int rem=arr[1];
+            swap(arr[size--],arr[1]);
+            int i=1;
+            while(i<=size){
+                int left=i*2;
+                int right=i*2+1;
+                int largest=i;
+                if(left<=size && arr[left]>arr[largest]) largest=left;
+                if(right<=size && arr[right]>arr[largest])    largest=right;
+                if(i!=largest){
+                     swap(arr[i],arr[largest]);
+                     i=largest;
                 }else{
                     break;
                 }
             }
-            return ret;
+            return rem;
         }
         void print(){
             for(int i=1;i<=size;i++)
                 cout<<arr[i]<<" ";
             cout<<endl;
         }
+
 };
-
 int main(){
-   heap h;
-    
-    // Insert test values
-    h.insert(10);
-    h.insert(20);
-    h.insert(5);
-    h.insert(30);
+    heap h1;
+    h1.insert(50);
+    h1.insert(55);
+    h1.insert(53);
+    h1.insert(52);
+    h1.insert(54);
+    h1.print();
+    cout<<h1.remove()<<endl;
+    cout<<h1.remove()<<endl;
+    h1.print();
 
-    // Print initial heap
-    cout << "Heap after insertions: ";
-    h.print();  // Should print: 30 20 5 10
-
-    // Test delete operations
-    cout << "Deleted element: " << h.del() << endl;  // Should delete 30
-    cout << "Heap after deleting max: ";
-    h.print();  // Should print: 20 10 5
-
-    cout << "Deleted element: " << h.del() << endl;  // Should delete 20
-    cout << "Heap after deleting max: ";
-    h.print();  // Should print: 10 5
-
-    cout << "Deleted element: " << h.del() << endl;  // Should delete 10
-    cout << "Heap after deleting max: ";
-    h.print();  // Should print: 5
-
-    cout << "Deleted element: " << h.del() << endl;  // Should delete 5
-    cout << "Heap after deleting max: ";
-    h.print();  // Should print nothing (heap is empty)
-
-
-
-    cout<<"using stl:"<<endl<<endl;
-
-    priority_queue<int> maxheap;
-    maxheap.push(3);
-    maxheap.push(5);
-    maxheap.push(7);
-    maxheap.push(4);
-    maxheap.push(9);
-
-    cout<<maxheap.top()<<endl;
-    maxheap.pop();
-    cout<<maxheap.top()<<endl;
-    cout<<"Size of the heap: "<<maxheap.size()<<endl;
-
-    cout<<"\n\nMin heap:"<<endl<<endl;
-    priority_queue<int,vector<int>,greater<int>> minHeap;
-    minHeap.push(3);
-    minHeap.push(5);
-    minHeap.push(7);
-    minHeap.push(4);
-    minHeap.push(9);
-
-    cout<<minHeap.top()<<endl;
-    minHeap.pop();
-    cout<<minHeap.top()<<endl;
-    cout<<"Size of the heap: "<<minHeap.size()<<endl;
-
-
-    return 0;
 }
